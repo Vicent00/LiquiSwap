@@ -1,66 +1,149 @@
-## Foundry
+# DescentraSwap - Liquidity Management Protocol
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+![Solidity](https://img.shields.io/badge/Solidity-0.8.26-blue.svg)
+![Foundry](https://img.shields.io/badge/Foundry-v0.2.0-orange.svg)
+![Arbitrum](https://img.shields.io/badge/Arbitrum-One-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-Foundry consists of:
+DescentraSwap is a liquidity management protocol that allows interaction with SushiSwap on the Arbitrum network. It is specifically designed for swap operations and liquidity management between USDT and DAI.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+## 🚀 Main Features
 
-## Documentation
+- **Automated Swap**: Efficient conversion between USDT and DAI
+- **Liquidity Management**: 
+  - Add liquidity to the USDT/DAI pool
+  - Remove liquidity from the pool
+  - Check LP token balances
+- **Security**: 
+  - Implementation of SafeERC20 for secure transfers
+  - Configurable slippage control
+  - Transaction deadlines
 
-https://book.getfoundry.sh/
+## 🛠 Technologies
 
-## Usage
+- **Language**: Solidity 0.8.26
+- **Framework**: Foundry
+- **DEX**: SushiSwap V2
+- **Network**: Arbitrum One
+- **Dependencies**:
+  - OpenZeppelin Contracts
+  - SushiSwap Core
+  - SushiSwap Periphery
 
-### Build
+## 📦 Installation
 
-```shell
-$ forge build
+1. Clone the repository:
+```bash
+git clone https://github.com/Vicent00/LiquiSwap.git
+cd LiquiSwap
+
 ```
 
-### Test
-
-```shell
-$ forge test
+2. Install the dependencies:
+```bash
+forge install
 ```
 
-### Format
-
-```shell
-$ forge fmt
+3. Configure the environment variables:
+```bash
+cp .env.example .env
+# Edita .env con tus claves API
 ```
 
-### Gas Snapshots
+## 🧪 Testing
 
-```shell
-$ forge snapshot
+### Run Local Tests
+
+```bash
+forge test
 ```
 
-### Anvil
-
-```shell
-$ anvil
+### Run Tests on Arbitrum Fork
+```bash
+forge test --fork-url https://arb1.arbitrum.io/rpc -vvvv
 ```
 
-### Deploy
+### Generate Gas Report
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+```bash
+forge test --gas-report
 ```
 
-### Cast
 
-```shell
-$ cast <subcommand>
+## 📚 Documentation
+
+### Project Structure
+
+```
+LiquiSwap/
+├── src/
+│   ├── Swap.sol              # Contrato principal
+│   └── interfaces/
+│       ├── IRouter.sol       # Interfaz del Router
+│       └── IFactory.sol      # Interfaz de la Factory
+├── test/
+│   └── testSwapLiquidity.t.sol  # Tests
+
+└── lib/
+    └── openzeppelin-contracts/
 ```
 
-### Help
+### Main Functions
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
+#### Swap
+```solidity
+function swapTokens(
+    uint amountIn_,
+    uint amountOutMin_,
+    address[] calldata path_,
+    address to_,
+    uint deadline_
+) public
 ```
+
+#### Add Liquidity
+
+```solidity
+function addLiquidity(
+    uint amountUsdt_,
+    uint amountDai_
+) public returns (uint liquidity)
+```
+
+#### Remove Liquidity
+```solidity
+function removeLiquidity(
+    uint amountLiquidity_
+) public returns (uint amountA, uint amountB)
+```
+
+## 🔒 Security
+
+- All token transfers use SafeERC20
+- Implementation of the checks-effects-interactions pattern
+- Reentrancy handling
+- Deadline validation
+- Slippage control
+
+## 🤝 Contributing
+
+- Fork the project
+- Create your feature branch (`git checkout -b feature/AmazingFeature`)
+- Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+- Push to the branch (`git push origin feature/AmazingFeature`)
+- Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 📞 Contact
+
+- Email: info@vicenteaguilar.com
+
+## 🙏 Acknowledgements
+
+- SushiSwap team for their excellent DEX
+- Arbitrum team for their L2 scaling solution
+- Foundry community for their incredible toolkit
+
